@@ -8,7 +8,6 @@ mov [BOOT_DRIVE], dl
 xor ax, ax
 mov ds, ax
 mov es, ax
-mov ds, ax
 mov ss, ax
 mov sp, 0x7C00
 
