@@ -12,7 +12,7 @@ void vga_clear(unsigned char color) {
 }
 
 void vga_put_at(char c, int x, int y, unsigned char color) {
-  int pos = x * y;
+  int pos = (y * VGA_ROW + x) * 2;
   video[pos] = c;
   video[pos + 1] = color;
 }
