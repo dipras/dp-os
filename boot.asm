@@ -14,7 +14,7 @@ mov sp, 0x7C00
 ; load kernel to 0x8000
 mov bx, KERNEL_OFFSET
 mov ah, 0x02
-mov al, 1
+mov al, 10
 mov ch, 0
 mov cl, 2
 mov dh, 0
