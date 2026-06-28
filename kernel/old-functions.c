@@ -117,13 +117,3 @@ void readline(char *buffer, int max_len) {
         }
     }
 }
-
-void main() {
-    clear_screen();
-
-    char *msg = "Hello World \n";
-    print_string(msg);
-    char *retrive;
-    int maxLen = 100;
-    readline(retrive, maxLen); 
-}
