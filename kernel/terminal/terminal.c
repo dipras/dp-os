@@ -4,13 +4,22 @@
 int cursor_y = 0;
 int cursor_x = 0;
 
-void terminal_init() {
+void terminal_clear() {
   vga_clear(0x0F);
 }
 
+void terminal_init() {
+  terminal_clear();
+}
+
 void terminal_putchar(char c) {
-  vga_put_at(c, cursor_x, cursor_y, 0x0F);
-  if(cursor_x < 80) {
+  int newLine = 0;
+  if(c == '\n') {
+    newLine = 1;
+  } else {
+    vga_put_at(c, cursor_x, cursor_y, 0x0F);
+  }
+  if(cursor_x < 79 && !newLine) {
     cursor_x++;
   } else {
     cursor_y++;
