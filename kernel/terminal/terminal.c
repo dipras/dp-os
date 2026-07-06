@@ -25,6 +25,11 @@ void terminal_putchar(char c) {
     cursor_y++;
     cursor_x = 0;
   }
+
+  if(cursor_y >= VGA_HEIGHT) {
+    vga_scroll();
+    cursor_y--;
+  }
 }
 
 void terminal_write(const char* str) {

@@ -1,6 +1,4 @@
 #include "vga.h"
-#define VGA_WIDTH 80
-#define VGA_HEIGHT 25
 
 volatile char *video = (volatile char*)0xB8000;
 
