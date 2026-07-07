@@ -1,5 +1,6 @@
 #include "terminal.h"
 #include "../drivers/vga.h"
+#include "../drivers/keyboard.h"
 
 int cursor_y = 0;
 int cursor_x = 0;
@@ -51,4 +52,38 @@ void terminal_backspace() {
 
   vga_put_at(' ', cursor_x, cursor_y, 0x0F);
   vga_move_cursor(cursor_x, cursor_y);
+}
+
+void terminal_readline(char* buffer, int max_len) {
+  int i = 0;
+  while(1) {
+    unsigned char scancode = keyboard_read_scancode();
+
+    if(scancode & 0x80) continue;
+
+    char c = scancode_to_ascii(scancode);
+    
+    if(c == 0) continue;
+
+    if(c == '\n') {
+      terminal_putchar('\n');
+      buffer[i] = '\0';
+      return;
+    }
+
+    if(c == '\b') {
+      if(i > 0) {
+        i--;
+        terminal_backspace();
+      }
+
+      continue;
+    }
+
+    if(i < max_len - 1) {
+      buffer[i] = c;
+      i++;
+      terminal_putchar(c);
+    }
+  }
 }

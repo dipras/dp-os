@@ -11,4 +11,6 @@ void terminal_backspace();
 void terminal_clear();
 
 void terminal_render();
+
+void terminal_readline(char* buffer, int max_len);
 #endif
