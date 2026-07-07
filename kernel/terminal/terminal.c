@@ -30,6 +30,8 @@ void terminal_putchar(char c) {
     vga_scroll();
     cursor_y--;
   }
+
+  vga_move_cursor(cursor_x, cursor_y);
 }
 
 void terminal_write(const char* str) {
@@ -48,4 +50,5 @@ void terminal_backspace() {
   }
 
   vga_put_at(' ', cursor_x, cursor_y, 0x0F);
+  vga_move_cursor(cursor_x, cursor_y);
 }

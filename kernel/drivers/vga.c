@@ -1,4 +1,5 @@
 #include "vga.h"
+#include "io.h"
 
 volatile char *video = (volatile char*)0xB8000;
 
@@ -28,5 +29,14 @@ void vga_scroll() {
   for(int j = 0; j < VGA_WIDTH; j++) {
     vga_put_at(' ', j, VGA_HEIGHT - 1, 0x0F);
   }
+}
 
+void vga_move_cursor(int x, int y) {
+  unsigned short pos = y * VGA_WIDTH + x;
+
+  outb(0x3D4, 14);
+  outb(0x3D5, pos >> 8);
+
+  outb(0x3D4, 15);
+  outb(0x3D5, pos & 0xFF);
 }
