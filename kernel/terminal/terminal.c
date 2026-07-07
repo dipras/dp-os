@@ -6,7 +6,10 @@ int cursor_y = 0;
 int cursor_x = 0;
 
 void terminal_clear() {
+  cursor_x = 0;
+  cursor_y = 0;
   vga_clear(0x0F);
+  vga_move_cursor(cursor_x, cursor_y);
 }
 
 void terminal_init() {
