@@ -1,4 +1,6 @@
 #include "idt.h"
+#include "pic.h"
+#include "../../drivers/io.h"
 
 static idt_entry_t idt[IDT_ENTRY_COUNT];
 static idt_ptr_t idt_pointer;
@@ -38,6 +40,9 @@ extern void isr29(void);
 extern void isr30(void);
 extern void isr31(void);
 
+extern void irq0(void);
+extern void irq1(void);
+
 static void memory_set(void* destination, uint8_t value, uint32_t size) {
     uint8_t* bytes = (uint8_t*)destination;
 
@@ -60,6 +65,7 @@ void idt_set_gate(
 }
 
 void idt_init(void) {
+    __asm__ volatile("cli");
     memory_set(idt, 0, sizeof(idt));
 
     idt_pointer.limit = sizeof(idt) - 1;
@@ -97,7 +103,9 @@ void idt_init(void) {
         (uint32_t)isr28,
         (uint32_t)isr29,
         (uint32_t)isr30,
-        (uint32_t)isr31
+        (uint32_t)isr31,
+        (uint32_t)irq0,
+        (uint32_t)irq1
     };
 
     for (uint8_t i = 0; i < 32; i++) {
@@ -109,5 +117,15 @@ void idt_init(void) {
         );
     }
 
+    pic_remap(0x20, 0x28);
+
+    outb(PIC1_DATA, 0xFF);
+    outb(PIC2_DATA, 0xFF);
+
+    pic_clear_mask(0);
+    pic_clear_mask(1);
+
     idt_load((uint32_t)&idt_pointer);
+
+    __asm__ volatile("sti");
 }

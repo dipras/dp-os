@@ -1,6 +1,9 @@
 #include "keyboard.h"
 #include "io.h"
+#include "../terminal/terminal.h"
 
+
+// pool method, not efficient
 int keyboard_has_data() {
     return inb(0x64) & 1;
 }
@@ -21,4 +24,11 @@ char scancode_to_ascii(unsigned char scancode) {
 
     if(scancode > 127) return 0;
     return map[scancode];
+}
+
+void keyboard_to_terminal() {
+    unsigned char scancode = inb(0x60);
+    char ascii = scancode_to_ascii(scancode);
+
+    terminal_putchar(ascii);
 }

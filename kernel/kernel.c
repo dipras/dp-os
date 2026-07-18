@@ -8,11 +8,6 @@ void main(void) {
 
     terminal_write("IDT initialized\n");
 
-    volatile int zero = 0;
-    volatile int result = 10 / zero;
-
-    (void)result;
-
     while (1) {
         __asm__ volatile ("hlt");
     }
