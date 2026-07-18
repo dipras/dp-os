@@ -71,7 +71,7 @@ void idt_init(void) {
     idt_pointer.limit = sizeof(idt) - 1;
     idt_pointer.base = (uint32_t)&idt;
 
-    uint32_t handlers[32] = {
+    uint32_t handlers[34] = {
         (uint32_t)isr0,
         (uint32_t)isr1,
         (uint32_t)isr2,
@@ -108,7 +108,7 @@ void idt_init(void) {
         (uint32_t)irq1
     };
 
-    for (uint8_t i = 0; i < 32; i++) {
+    for (uint8_t i = 0; i < 34; i++) {
         idt_set_gate(
             i,
             handlers[i],
