@@ -1,5 +1,6 @@
-#include "terminal/terminal.h" 
+#include "terminal/terminal.h"
 #include "arch/x86/idt.h"
+#include "arch/x86/mmap.h"
 #define BUF_LEN 8
 
 void main(void) {
@@ -7,6 +8,8 @@ void main(void) {
     idt_init();
 
     terminal_write("IDT initialized\n");
+
+    mmap_print();
 
     char buf[BUF_LEN];
     while (1) {
