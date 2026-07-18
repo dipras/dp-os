@@ -58,15 +58,11 @@ void terminal_backspace() {
 }
 
 void terminal_readline(char* buffer, int max_len) {
+  keyboard_flush(); // abaikan ketikan sebelum readline dipanggil
+
   int i = 0;
   while(1) {
-    unsigned char scancode = keyboard_read_scancode();
-
-    if(scancode & 0x80) continue;
-
-    char c = scancode_to_ascii(scancode);
-    
-    if(c == 0) continue;
+    char c = keyboard_buffer_pop();
 
     if(c == '\n') {
       terminal_putchar('\n');

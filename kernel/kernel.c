@@ -8,7 +8,12 @@ void main(void) {
 
     terminal_write("IDT initialized\n");
 
+    char buf[BUF_LEN];
     while (1) {
-        __asm__ volatile ("hlt");
+        terminal_write("> ");
+        terminal_readline(buf, BUF_LEN);
+        terminal_write("You typed: ");
+        terminal_write(buf);
+        terminal_write("\n");
     }
 }

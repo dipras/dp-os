@@ -9,7 +9,7 @@ void irq_handler(interrupt_frame_t* frame) {
             break;
 
         case 1:
-            keyboard_to_terminal();
+            keyboard_on_irq();
             break;
     }
 
