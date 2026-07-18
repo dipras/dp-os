@@ -13,5 +13,7 @@ typedef struct {
 #define MMAP_TYPE_USABLE 1
 
 void mmap_print(void);
+uint32_t mmap_get_count(void);
+mmap_entry_t* mmap_get_entries(void);
 
 #endif

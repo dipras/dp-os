@@ -31,9 +31,17 @@ static const char* type_to_string(uint32_t type) {
     }
 }
 
+uint32_t mmap_get_count(void) {
+    return *(volatile uint32_t*)MMAP_COUNT_ADDR;
+}
+
+mmap_entry_t* mmap_get_entries(void) {
+    return (mmap_entry_t*)MMAP_ENTRIES_ADDR;
+}
+
 void mmap_print(void) {
-    uint32_t count = *(volatile uint32_t*)MMAP_COUNT_ADDR;
-    mmap_entry_t* entries = (mmap_entry_t*)MMAP_ENTRIES_ADDR;
+    uint32_t count = mmap_get_count();
+    mmap_entry_t* entries = mmap_get_entries();
 
     terminal_write("Memory map: ");
     print_hex64(count);

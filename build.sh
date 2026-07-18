@@ -20,10 +20,11 @@ gcc -m32 -ffreestanding -fno-pie -fno-pic -fno-stack-protector -c kernel/arch/x8
 gcc -m32 -ffreestanding -fno-pie -fno-pic -fno-stack-protector -c kernel/arch/x86/irq.c -o irq.o
 gcc -m32 -ffreestanding -fno-pie -fno-pic -fno-stack-protector -c kernel/arch/x86/pic.c -o pic.o
 gcc -m32 -ffreestanding -fno-pie -fno-pic -fno-stack-protector -c kernel/arch/x86/mmap.c -o mmap.o
+gcc -m32 -ffreestanding -fno-pie -fno-pic -fno-stack-protector -c kernel/mm/pmm.c -o pmm.o
 
 
 # 4. Jahit (Link) kernel_entry.o dan kernel.o menjadi raw binary di offset 0x8000
-ld -m elf_i386 -T linker.ld -o kernel.bin kernel_entry.o kernel.o vga.o terminal.o keyboard.o string.o idt_load.o idt.o isr_asm.o isr.o irq_asm.o irq.o pic.o mmap.o --oformat binary
+ld -m elf_i386 -T linker.ld -o kernel.bin kernel_entry.o kernel.o vga.o terminal.o keyboard.o string.o idt_load.o idt.o isr_asm.o isr.o irq_asm.o irq.o pic.o mmap.o pmm.o --oformat binary
 
 # 5. Gabungkan bootloader dan kernel menjadi OS image
 cat boot.bin kernel.bin > os-image.bin
