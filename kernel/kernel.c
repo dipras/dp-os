@@ -1,6 +1,7 @@
 #include "terminal/terminal.h"
 #include "arch/x86/idt.h"
 #include "arch/x86/mmap.h"
+#include "arch/x86/paging.h"
 #include "mm/pmm.h"
 #define BUF_LEN 8
 
@@ -14,6 +15,9 @@ void main(void) {
 
     pmm_init();
     pmm_print_stats();
+
+    paging_init();
+    pmm_print_stats(); // frame yang dipakai page directory/table ikut kepotong
 
     // demo cepat: alokasi 2 frame, lihat free count turun, lalu bebaskan 1
     uint32_t f1 = pmm_alloc_frame();
